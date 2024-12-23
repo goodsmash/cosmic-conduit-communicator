@@ -2,19 +2,24 @@ import { motion } from "framer-motion";
 import ParticleBackground from "@/components/ParticleBackground";
 import StoryCard from "@/components/StoryCard";
 import Timeline from "@/components/Timeline";
+import ChapterSection from "@/components/ChapterSection";
+import SpaceScene from "@/components/SpaceScene";
 
 const chapters = [
   {
     title: "The Aethel",
     content: "Humanity's far-flung descendants return to prevent a catastrophe.",
+    image: "/images/aethel.png"
   },
   {
     title: "The Probes",
     content: "Advanced temporal probes carry messages across time.",
+    image: "/images/probes.png"
   },
   {
     title: "The Threat",
     content: "An asteroid approaches Earth, undetectable by current technology.",
+    image: "/images/asteroid.png"
   },
 ];
 
@@ -25,10 +30,11 @@ const Index = () => {
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center p-6">
+        <SpaceScene />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center max-w-4xl mx-auto"
+          className="text-center max-w-4xl mx-auto relative z-10"
         >
           <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-space-blue to-space-purple bg-clip-text text-transparent mb-6">
             Echoes of Tomorrow
@@ -56,11 +62,15 @@ const Index = () => {
               key={chapter.title}
               title={chapter.title}
               content={chapter.content}
+              image={chapter.image}
               index={index}
             />
           ))}
         </div>
       </section>
+
+      {/* Chapter Sections */}
+      <ChapterSection />
 
       {/* Timeline Section */}
       <section className="container mx-auto px-6 py-24">
