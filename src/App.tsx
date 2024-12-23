@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import BlackHole from "./pages/BlackHole";
 import Asteroid from "./pages/Asteroid";
-import Timeline from "./components/Timeline";
+import TimelinePage from "./pages/TimelinePage";
 import Chapters from "./pages/Chapters";
 import Navigation from "./components/Navigation";
 
@@ -23,7 +23,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/black-hole" element={<BlackHole />} />
           <Route path="/asteroid" element={<Asteroid />} />
-          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/timeline" element={<TimelinePage />} />
           <Route path="/chapters" element={<Chapters />} />
         </Routes>
       </BrowserRouter>
