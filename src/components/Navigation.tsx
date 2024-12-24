@@ -1,47 +1,115 @@
-import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { Link } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import { cn } from '@/lib/utils'
+import {
+  Home,
+  BookOpen,
+  Database,
+  Search,
+  FileText,
+  Rocket,
+  User,
+  Settings,
+  LogOut
+} from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useLocation } from 'react-router-dom'
 
-const Navigation = () => {
-  const location = useLocation();
+const navigationItems = [
+  { name: 'Home', path: '/', icon: Home },
+  { name: 'Chapters', path: '/chapters', icon: BookOpen },
+  { name: 'Galaxy Library', path: '/library', icon: Database },
+  { name: 'Discover', path: '/discover', icon: Search },
+  { name: 'Research Journal', path: '/research', icon: FileText },
+  { name: 'Simulations', path: '/simulations', icon: Rocket },
+]
 
-  const links = [
-    { href: "/", label: "Home" },
-    { href: "/black-hole", label: "Event Horizon" },
-    { href: "/asteroid", label: "The Harbinger" },
-    { href: "/timeline", label: "Timeline" },
-    { href: "/chapters", label: "Chapters" },
-  ];
+export function Navigation() {
+  const location = useLocation()
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-space-black/80 backdrop-blur-lg border-b border-space-blue/20">
-      <div className="container mx-auto px-6 py-4">
-        <ul className="flex items-center space-x-8">
-          {links.map((link) => (
-            <li key={link.href}>
-              <Link
-                to={link.href}
-                className={cn(
-                  "relative text-gray-400 hover:text-white transition-colors",
-                  location.pathname === link.href && "text-white"
-                )}
-              >
-                {location.pathname === link.href && (
-                  <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-space-blue"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <nav className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="flex h-14 items-center px-4">
+        <div className="flex">
+          <Link to="/" className="flex items-center space-x-2">
+            <Rocket className="h-6 w-6" />
+            <span className="hidden font-bold sm:inline-block">
+              Cosmic Conduit
+            </span>
+          </Link>
+        </div>
+        <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
+          <div className="w-full flex-1 md:w-auto md:flex-none">
+            <div className="hidden md:flex items-center gap-4 mx-6">
+              {navigationItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    'flex items-center space-x-2 text-sm font-medium transition-colors hover:text-primary',
+                    location.pathname === item.path
+                      ? 'text-primary'
+                      : 'text-muted-foreground'
+                  )}
+                >
+                  <item.icon className="h-4 w-4" />
+                  <span>{item.name}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <Search className="h-4 w-4" />
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="relative h-8 w-8 rounded-full"
+                >
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src="" alt="@user" />
+                    <AvatarFallback>U</AvatarFallback>
+                  </Avatar>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56" align="end" forceMount>
+                <DropdownMenuLabel className="font-normal">
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium leading-none">User</p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      user@example.com
+                    </p>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <User className="mr-2 h-4 w-4" />
+                  <span>Profile</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
       </div>
     </nav>
-  );
-};
-
-export default Navigation;
+  )
+}
